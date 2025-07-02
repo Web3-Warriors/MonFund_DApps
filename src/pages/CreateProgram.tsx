@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -181,7 +182,7 @@ const CreateProgram = () => {
         formData.title,
         formData.description,
         formData.image ||
-          "https://via.placeholder.com/400x300?text=Program+Image",
+          "https://static.vecteezy.com/system/resources/previews/029/109/502/large_2x/building-city-university-campus-ai-generated-photo.jpg",
         formData.pic as `0x${string}`,
         parseEther(formData.targetFund),
         BigInt(startTimestamp),
@@ -254,7 +255,7 @@ const CreateProgram = () => {
                     type="url"
                   />
                   <p className="text-sm text-muted-foreground mt-1">
-                    Jika kosong, akan menggunakan gambar default
+                    Jika kosong, akan menggunakan gambar kampus default
                   </p>
                 </div>
 
@@ -360,6 +361,8 @@ const CreateProgram = () => {
           </Card>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

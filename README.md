@@ -149,12 +149,6 @@ src/
 npm run build
 ```
 
-### Deploy ke Lovable
-
-1. Buka [Lovable Project](https://lovable.dev/projects/2179dfe1-4ad2-4888-8595-da8c91576ddf)
-2. Klik Share → Publish
-3. Ikuti instruksi deployment
-
 ### Deploy ke Vercel/Netlify
 
 ```bash
@@ -217,7 +211,6 @@ Jika mengalami masalah atau memiliki pertanyaan:
 
 1. Buka issue di GitHub repository
 2. Hubungi tim development
-3. Cek dokumentasi di [Lovable Docs](https://docs.lovable.dev)
 
 ---
 

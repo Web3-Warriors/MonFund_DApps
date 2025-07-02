@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { ProgramCard } from "@/components/ProgramCard";
 import { Coins, Heart, Target, Users, TrendingUp, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -253,6 +254,8 @@ const Index = () => {
           </Card>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };
