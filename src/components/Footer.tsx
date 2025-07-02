@@ -146,25 +146,6 @@ export const Footer: React.FC = () => {
                 <span>+62 21 1234 5678</span>
               </div>
             </div>
-
-            {/* Newsletter */}
-            <div className="pt-2">
-              <p className="text-sm text-muted-foreground mb-2">
-                Dapatkan update terbaru
-              </p>
-              <div className="flex space-x-2">
-                <input
-                  type="email"
-                  placeholder="Email Anda"
-                  className="flex-1 px-3 py-2 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20"
-                />
-                <HoverAnimation scale={1.1}>
-                  <Button size="sm" variant="secondary">
-                    <Heart className="w-4 h-4" />
-                  </Button>
-                </HoverAnimation>
-              </div>
-            </div>
           </AnimatedSection>
         </div>
 

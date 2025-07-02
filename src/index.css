@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* MonFund Design System - Web3 Crowdfunding Theme */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 
 @layer base {
   :root {
@@ -52,9 +52,22 @@
     --info: 199 89% 48%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(263 70% 50%) 100%);
-    --gradient-secondary: linear-gradient(135deg, hsl(142 76% 36%) 0%, hsl(199 89% 48%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(240 10% 3.9%) 0%, hsl(240 5.9% 10%) 50%, hsl(217 91% 60% / 0.1) 100%);
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(217 91% 60%) 0%,
+      hsl(263 70% 50%) 100%
+    );
+    --gradient-secondary: linear-gradient(
+      135deg,
+      hsl(142 76% 36%) 0%,
+      hsl(199 89% 48%) 100%
+    );
+    --gradient-hero: linear-gradient(
+      135deg,
+      hsl(240 10% 3.9%) 0%,
+      hsl(240 5.9% 10%) 50%,
+      hsl(217 91% 60% / 0.1) 100%
+    );
 
     /* Shadows */
     --shadow-glow: 0 0 50px hsl(217 91% 60% / 0.3);
@@ -103,7 +116,12 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-space-grotesk;
   }
 }
@@ -118,7 +136,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary));
+  background: rgb(115, 42, 210);
   border-radius: 4px;
 }
 
@@ -137,7 +155,8 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
   }
   50% {
@@ -147,7 +166,12 @@
 
 .shimmer {
   animation: shimmer 2s infinite linear;
-  background: linear-gradient(to right, transparent 0%, hsl(var(--primary) / 0.1) 50%, transparent 100%);
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    hsl(var(--primary) / 0.1) 50%,
+    transparent 100%
+  );
   background-size: 468px 100%;
 }
 
