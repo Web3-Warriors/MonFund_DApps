@@ -2,8 +2,8 @@ import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Calendar, Target, Users, Clock } from "lucide-react";
-import { Program, ProgramStatus } from "@/config/contract";
+import { Target, Clock } from "lucide-react";
+import { Program } from "@/config/contract";
 import { formatEther } from "viem";
 import { Link } from "react-router-dom";
 import { AnimatedCard } from "@/components/animations";
@@ -25,7 +25,7 @@ export const ProgramCard: React.FC<ProgramCardProps> = ({ program }) => {
 
   return (
     <AnimatedCard className="h-full">
-      <Card className="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:shadow-card transition-all duration-300">
+      <Card className="h-full bg-card/50 backdrop-blur-lg border-border/50 hover:shadow-card transition-all duration-300">
         <CardHeader className="p-0">
           <div className="relative overflow-hidden rounded-t-lg">
             <img

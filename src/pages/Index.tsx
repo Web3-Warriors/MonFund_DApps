@@ -64,9 +64,9 @@ const Index = () => {
 
       {/* Hero Section */}
       <PageTransition>
-        <section className="relative py-20 px-4 overflow-hidden">
+        <section className="relative py-40 px-4 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-hero" />
-          <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 opacity-5">
             <img
               src={heroImage}
               alt="Hero Background"
