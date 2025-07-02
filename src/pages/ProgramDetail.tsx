@@ -384,39 +384,63 @@ const ProgramDetail = () => {
             </Card>
 
             {/* Contribute */}
-            {typedProgram.status === ProgramStatus.Active && (
+            {typedProgram.status === ProgramStatus.Active &&
+              !isProgramEnded && (
+                <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Heart className="w-5 h-5" />
+                      Dukung Program Ini
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <Label htmlFor="amount">Jumlah (ETH)</Label>
+                      <Input
+                        id="amount"
+                        type="number"
+                        step="0.001"
+                        placeholder="0.001"
+                        value={contributeAmount}
+                        onChange={(e) => setContributeAmount(e.target.value)}
+                      />
+                    </div>
+                    <Button
+                      onClick={handleContribute}
+                      disabled={isPending || !isConnected}
+                      className="w-full"
+                      variant="hero"
+                    >
+                      {isPending ? "Memproses..." : "Kontribusi Sekarang"}
+                    </Button>
+                    {!isConnected && (
+                      <p className="text-sm text-muted-foreground text-center">
+                        Hubungkan wallet untuk berkontribusi
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              )}
+
+            {/* Program Ended Message */}
+            {isProgramEnded && (
               <Card className="bg-card/50 backdrop-blur-sm border-border/50">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Heart className="w-5 h-5" />
-                    Dukung Program Ini
+                    <AlertCircle className="w-5 h-5 text-warning" />
+                    Program Berakhir
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="amount">Jumlah (ETH)</Label>
-                    <Input
-                      id="amount"
-                      type="number"
-                      step="0.001"
-                      placeholder="0.001"
-                      value={contributeAmount}
-                      onChange={(e) => setContributeAmount(e.target.value)}
-                    />
-                  </div>
-                  <Button
-                    onClick={handleContribute}
-                    disabled={isPending || !isConnected}
-                    className="w-full"
-                    variant="hero"
-                  >
-                    {isPending ? "Memproses..." : "Kontribusi Sekarang"}
-                  </Button>
-                  {!isConnected && (
-                    <p className="text-sm text-muted-foreground text-center">
-                      Hubungkan wallet untuk berkontribusi
+                <CardContent>
+                  <div className="p-3 bg-warning/10 border border-warning/20 rounded-lg">
+                    <p className="text-sm text-warning">
+                      Program ini telah berakhir dan tidak dapat menerima
+                      kontribusi lagi.
+                      {typedProgram.status === ProgramStatus.Completed
+                        ? " Status: Selesai"
+                        : " Batas waktu telah terlampaui."}
                     </p>
-                  )}
+                  </div>
                 </CardContent>
               </Card>
             )}

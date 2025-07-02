@@ -20,7 +20,7 @@ export const Header: React.FC = () => {
             <Coins className="w-5 h-5 text-primary-foreground" />
           </div>
           <span className="font-space-grotesk font-bold text-xl bg-gradient-primary bg-clip-text text-transparent">
-            MonFund
+            <img src="/logo-long.png" alt="MonFund" className="h-8" />
           </span>
         </Link>
 

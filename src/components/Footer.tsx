@@ -155,7 +155,9 @@ export const Footer: React.FC = () => {
               <span className="hidden md:inline">|</span>
               <span className="flex items-center space-x-1">
                 <span>Powered by</span>
-                <span className="font-semibold text-primary">Blockchain</span>
+                <span className="font-semibold text-primary">
+                  Monad Network
+                </span>
               </span>
             </div>
 

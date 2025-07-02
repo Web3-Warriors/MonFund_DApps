@@ -75,7 +75,7 @@ const Index = () => {
           </Badge>
 
           <h1 className="font-space-grotesk text-4xl md:text-6xl font-bold mb-6 bg-gradient-primary bg-clip-text text-transparent">
-            MonFund
+            MonFund: Crowdfunding Kampus
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
