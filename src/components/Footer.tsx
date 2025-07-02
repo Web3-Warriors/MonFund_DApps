@@ -216,22 +216,6 @@ export const Footer: React.FC = () => {
             </div>
           </div>
         </AnimatedSection>
-
-        {/* Web3 Badge */}
-        <AnimatedSection
-          animation="fadeUp"
-          delay={0.6}
-          className="flex justify-center mt-6"
-        >
-          <HoverAnimation scale={1.05}>
-            <div className="inline-flex items-center space-x-2 px-4 py-2 bg-gradient-primary/10 border border-primary/20 rounded-full">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-primary">
-                Decentralized & Secure
-              </span>
-            </div>
-          </HoverAnimation>
-        </AnimatedSection>
       </div>
     </AnimatedSection>
   );

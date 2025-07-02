@@ -7,6 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Filter, Coins } from "lucide-react";
+import {
+  AnimatedSection,
+  PageTransition,
+  HoverAnimation,
+} from "@/components/animations";
 import { useReadContract, useConfig } from "wagmi";
 import { readContract } from "@wagmi/core";
 import {
@@ -131,12 +136,12 @@ const Programs = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageTransition className="min-h-screen bg-background">
       <Header />
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
-        <div className="text-center mb-12">
+        <AnimatedSection animation="fadeUp" className="text-center mb-12">
           <h1 className="font-space-grotesk text-4xl font-bold mb-4">
             Jelajahi Program
           </h1>
@@ -144,129 +149,158 @@ const Programs = () => {
             Temukan program-program menarik yang dapat Anda dukung untuk
             kemajuan kampus
           </p>
-        </div>
+        </AnimatedSection>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-primary mb-2">
-                {programs.length}
-              </div>
-              <div className="text-muted-foreground">Total Program</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-success mb-2">
-                {activePrograms.length}
-              </div>
-              <div className="text-muted-foreground">Program Aktif</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-info mb-2">
-                {completedPrograms.length}
-              </div>
-              <div className="text-muted-foreground">Program Selesai</div>
-            </CardContent>
-          </Card>
-        </div>
+        <AnimatedSection
+          animation="stagger"
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+        >
+          <HoverAnimation scale={1.05}>
+            <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+              <CardContent className="p-6 text-center">
+                <div className="text-3xl font-bold text-primary mb-2">
+                  {programs.length}
+                </div>
+                <div className="text-muted-foreground">Total Program</div>
+              </CardContent>
+            </Card>
+          </HoverAnimation>
+          <HoverAnimation scale={1.05}>
+            <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+              <CardContent className="p-6 text-center">
+                <div className="text-3xl font-bold text-success mb-2">
+                  {activePrograms.length}
+                </div>
+                <div className="text-muted-foreground">Program Aktif</div>
+              </CardContent>
+            </Card>
+          </HoverAnimation>
+          <HoverAnimation scale={1.05}>
+            <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+              <CardContent className="p-6 text-center">
+                <div className="text-3xl font-bold text-info mb-2">
+                  {completedPrograms.length}
+                </div>
+                <div className="text-muted-foreground">Program Selesai</div>
+              </CardContent>
+            </Card>
+          </HoverAnimation>
+        </AnimatedSection>
 
         {/* Search and Filter */}
-        <div className="flex flex-col md:flex-row gap-4 mb-8">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              placeholder="Cari program..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
+        <AnimatedSection animation="fadeUp" delay={0.3}>
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                placeholder="Cari program..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
 
-          <div className="flex gap-2">
-            <Badge
-              variant={statusFilter === "all" ? "default" : "outline"}
-              className="cursor-pointer px-4 py-2"
-              onClick={() => setStatusFilter("all")}
-            >
-              Semua
-            </Badge>
-            <Badge
-              variant={statusFilter === "active" ? "default" : "outline"}
-              className="cursor-pointer px-4 py-2"
-              onClick={() => setStatusFilter("active")}
-            >
-              Aktif
-            </Badge>
-            <Badge
-              variant={statusFilter === "completed" ? "default" : "outline"}
-              className="cursor-pointer px-4 py-2"
-              onClick={() => setStatusFilter("completed")}
-            >
-              Selesai
-            </Badge>
+            <div className="flex gap-2">
+              <HoverAnimation scale={1.05}>
+                <Badge
+                  variant={statusFilter === "all" ? "default" : "outline"}
+                  className="cursor-pointer px-4 py-2"
+                  onClick={() => setStatusFilter("all")}
+                >
+                  Semua
+                </Badge>
+              </HoverAnimation>
+              <HoverAnimation scale={1.05}>
+                <Badge
+                  variant={statusFilter === "active" ? "default" : "outline"}
+                  className="cursor-pointer px-4 py-2"
+                  onClick={() => setStatusFilter("active")}
+                >
+                  Aktif
+                </Badge>
+              </HoverAnimation>
+              <HoverAnimation scale={1.05}>
+                <Badge
+                  variant={statusFilter === "completed" ? "default" : "outline"}
+                  className="cursor-pointer px-4 py-2"
+                  onClick={() => setStatusFilter("completed")}
+                >
+                  Selesai
+                </Badge>
+              </HoverAnimation>
+            </div>
           </div>
-        </div>
+        </AnimatedSection>
 
         {/* Programs Grid */}
         {isLoadingIds || isLoadingPrograms ? (
-          <div className="text-center py-12">
-            <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Memuat program...</p>
-          </div>
+          <AnimatedSection animation="fadeUp" delay={0.4}>
+            <div className="text-center py-12">
+              <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Memuat program...</p>
+            </div>
+          </AnimatedSection>
         ) : idsError ? (
-          <div className="text-center py-12">
-            <Coins className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-space-grotesk text-xl font-semibold mb-2">
-              Gagal memuat program
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Terjadi kesalahan saat mengambil data program. Pastikan Anda
-              terhubung ke jaringan yang benar.
-            </p>
-            <Button
-              variant="hero"
-              onClick={() => {
-                refetchIds();
-                window.location.reload();
-              }}
-            >
-              Muat Ulang
-            </Button>
-          </div>
+          <AnimatedSection animation="fadeUp" delay={0.4}>
+            <div className="text-center py-12">
+              <Coins className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="font-space-grotesk text-xl font-semibold mb-2">
+                Gagal memuat program
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                Terjadi kesalahan saat mengambil data program. Pastikan Anda
+                terhubung ke jaringan yang benar.
+              </p>
+              <HoverAnimation scale={1.05}>
+                <Button
+                  variant="hero"
+                  onClick={() => {
+                    refetchIds();
+                    window.location.reload();
+                  }}
+                >
+                  Muat Ulang
+                </Button>
+              </HoverAnimation>
+            </div>
+          </AnimatedSection>
         ) : filteredPrograms.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPrograms.map((program) => (
-              <ProgramCard key={program.id.toString()} program={program} />
-            ))}
-          </div>
+          <AnimatedSection animation="stagger" delay={0.4} staggerDelay={0.1}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredPrograms.map((program) => (
+                <ProgramCard key={program.id.toString()} program={program} />
+              ))}
+            </div>
+          </AnimatedSection>
         ) : (
-          <div className="text-center py-12">
-            <Coins className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="font-space-grotesk text-xl font-semibold mb-2">
-              {searchTerm || statusFilter !== "all"
-                ? "Tidak ada program yang ditemukan"
-                : "Belum ada program"}
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              {searchTerm || statusFilter !== "all"
-                ? "Coba ubah kriteria pencarian atau filter Anda"
-                : "Jadilah yang pertama membuat program crowdfunding!"}
-            </p>
-            {!searchTerm && statusFilter === "all" && (
-              <Button variant="hero" asChild>
-                <a href="/create">Buat Program Pertama</a>
-              </Button>
-            )}
-          </div>
+          <AnimatedSection animation="fadeUp" delay={0.4}>
+            <div className="text-center py-12">
+              <Coins className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="font-space-grotesk text-xl font-semibold mb-2">
+                {searchTerm || statusFilter !== "all"
+                  ? "Tidak ada program yang ditemukan"
+                  : "Belum ada program"}
+              </h3>
+              <p className="text-muted-foreground mb-6">
+                {searchTerm || statusFilter !== "all"
+                  ? "Coba ubah kriteria pencarian atau filter Anda"
+                  : "Jadilah yang pertama membuat program crowdfunding!"}
+              </p>
+              {!searchTerm && statusFilter === "all" && (
+                <HoverAnimation scale={1.05}>
+                  <Button variant="hero" asChild>
+                    <a href="/create">Buat Program Pertama</a>
+                  </Button>
+                </HoverAnimation>
+              )}
+            </div>
+          </AnimatedSection>
         )}
       </div>
 
       <Footer />
-    </div>
+    </PageTransition>
   );
 };
 

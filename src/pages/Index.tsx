@@ -15,7 +15,7 @@ import {
   Program,
 } from "@/config/contract";
 import { useIsOwner } from "@/hooks/useIsOwner";
-import heroImage from "@/assets/hero-image.jpg";
+import heroImage from "@/assets/hero-img.webp";
 import {
   AnimatedSection,
   PageTransition,
@@ -78,7 +78,7 @@ const Index = () => {
             <AnimatedSection animation="fadeUp" delay={0.1}>
               <Badge
                 variant="secondary"
-                className="mb-6 bg-primary/20 text-primary border-primary/30"
+                className="mb-6 bg-primary/20 text-primary border-primary/30 text-sm"
               >
                 🚀 Platform Crowdfunding Kampus Berbasis Web3
               </Badge>
@@ -157,10 +157,54 @@ const Index = () => {
         </section>
       </PageTransition>
 
+      {/* Features */}
+      <AnimatedSection animation="fadeUp">
+        <section className="py-16 px-4">
+          <div className="container mx-auto">
+            <AnimatedSection animation="fadeUp" delay={0.1}>
+              <div className="text-center mb-12">
+                <h2 className="font-space-grotesk text-3xl font-bold mb-4">
+                  Mengapa MonFund?
+                </h2>
+                <p className="text-muted-foreground text-lg">
+                  Platform crowdfunding yang aman, transparan, dan mudah
+                  digunakan
+                </p>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection animation="stagger" staggerDelay={0.2}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <FeatureCard
+                  icon={Shield}
+                  title="Aman & Transparan"
+                  description="Semua transaksi tercatat di blockchain, memberikan transparansi penuh kepada donatur"
+                  delay={0}
+                />
+
+                <FeatureCard
+                  icon={Users}
+                  title="Komunitas Kuat"
+                  description="Bergabung dengan komunitas kampus yang peduli dan saling mendukung untuk kemajuan bersama"
+                  delay={0.2}
+                />
+
+                <FeatureCard
+                  icon={TrendingUp}
+                  title="Dampak Nyata"
+                  description="Setiap kontribusi memberikan dampak langsung untuk kemajuan program dan fasilitas kampus"
+                  delay={0.4}
+                />
+              </div>
+            </AnimatedSection>
+          </div>
+        </section>
+      </AnimatedSection>
+
       {/* Featured Programs */}
       {featuredPrograms.length > 0 && (
         <AnimatedSection animation="fadeUp" delay={0.1}>
-          <section className="py-16 px-4">
+          <section className="py-16 px-4 bg-muted/30">
             <div className="container mx-auto">
               <div className="text-center mb-12">
                 <AnimatedSection animation="fadeUp" delay={0.2}>
@@ -203,50 +247,6 @@ const Index = () => {
         </AnimatedSection>
       )}
 
-      {/* Features */}
-      <AnimatedSection animation="fadeUp">
-        <section className="py-16 px-4 bg-muted/30">
-          <div className="container mx-auto">
-            <AnimatedSection animation="fadeUp" delay={0.1}>
-              <div className="text-center mb-12">
-                <h2 className="font-space-grotesk text-3xl font-bold mb-4">
-                  Mengapa MonFund?
-                </h2>
-                <p className="text-muted-foreground text-lg">
-                  Platform crowdfunding yang aman, transparan, dan mudah
-                  digunakan
-                </p>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection animation="stagger" staggerDelay={0.2}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <FeatureCard
-                  icon={Shield}
-                  title="Aman & Transparan"
-                  description="Semua transaksi tercatat di blockchain, memberikan transparansi penuh kepada donatur"
-                  delay={0}
-                />
-
-                <FeatureCard
-                  icon={Users}
-                  title="Komunitas Kuat"
-                  description="Bergabung dengan komunitas kampus yang peduli dan saling mendukung untuk kemajuan bersama"
-                  delay={0.2}
-                />
-
-                <FeatureCard
-                  icon={TrendingUp}
-                  title="Dampak Nyata"
-                  description="Setiap kontribusi memberikan dampak langsung untuk kemajuan program dan fasilitas kampus"
-                  delay={0.4}
-                />
-              </div>
-            </AnimatedSection>
-          </div>
-        </section>
-      </AnimatedSection>
-
       {/* CTA Section */}
       <AnimatedSection animation="fadeUp">
         <section className="py-16 px-4">
@@ -255,13 +255,15 @@ const Index = () => {
               <CardContent className="p-0">
                 <AnimatedSection animation="fadeUp" delay={0.1}>
                   <h2 className="font-space-grotesk text-3xl font-bold text-primary-foreground mb-4">
-                    Siap Memulai?
+                    Bergabunglah dengan MonFund
                   </h2>
                 </AnimatedSection>
                 <AnimatedSection animation="fadeUp" delay={0.2}>
                   <p className="text-primary-foreground/80 text-lg mb-8 max-w-2xl mx-auto">
                     Bergabunglah dengan ribuan mahasiswa lainnya dalam
-                    menciptakan perubahan positif di kampus
+                    menciptakan perubahan secara positif di kampus melalui
+                    program-program inovatif yang didukung oleh komunitas
+                    kampus.
                   </p>
                 </AnimatedSection>
                 <AnimatedSection

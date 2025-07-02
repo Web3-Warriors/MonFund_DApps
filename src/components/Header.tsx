@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
-import { Coins, Heart, Plus } from "lucide-react";
+import { Coins, Heart, Home, ListTodo, Plus } from "lucide-react";
 import { useIsOwner } from "@/hooks/useIsOwner";
 import { NavigationButton } from "@/components/ui/NavigationButton";
 import { HoverAnimation } from "@/components/animations";
@@ -25,24 +25,24 @@ export const Header: React.FC = () => {
     tl.fromTo(
       headerRef.current,
       { y: -100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
+      { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" }
     )
       .fromTo(
         logoRef.current,
         { x: -50, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+        { x: 0, opacity: 1, duration: 0.3, ease: "back.out(1.7)" },
         "-=0.4"
       )
       .fromTo(
         navRef.current?.children || [],
         { y: -20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" },
+        { y: 0, opacity: 1, duration: 0.2, stagger: 0.1, ease: "power2.out" },
         "-=0.4"
       )
       .fromTo(
         connectRef.current,
         { x: 50, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+        { x: 0, opacity: 1, duration: 0.3, ease: "back.out(1.7)" },
         "-=0.6"
       );
   }, []);
@@ -55,10 +55,7 @@ export const Header: React.FC = () => {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <HoverAnimation scale={1.1}>
-          <Link ref={logoRef} to="/" className="flex items-center space-x-2">
-            <div className="flex items-center justify-center w-8 h-8 bg-gradient-primary rounded-lg">
-              <Coins className="w-5 h-5 text-primary-foreground" />
-            </div>
+          <Link ref={logoRef} to="/">
             <span className="font-space-grotesk font-bold text-xl bg-gradient-primary bg-clip-text text-transparent">
               <img src="/logo-long.png" alt="MonFund" className="h-8" />
             </span>
@@ -67,10 +64,14 @@ export const Header: React.FC = () => {
 
         {/* Navigation */}
         <nav ref={navRef} className="hidden md:flex items-center space-x-1">
-          <NavigationButton to="/" isActive={isActive("/")}>
+          <NavigationButton to="/" isActive={isActive("/")} icon={Home}>
             Beranda
           </NavigationButton>
-          <NavigationButton to="/programs" isActive={isActive("/programs")}>
+          <NavigationButton
+            to="/programs"
+            isActive={isActive("/programs")}
+            icon={ListTodo}
+          >
             Program
           </NavigationButton>
           {isOwner && (

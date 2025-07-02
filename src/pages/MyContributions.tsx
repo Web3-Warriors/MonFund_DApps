@@ -14,6 +14,11 @@ import {
   Program,
 } from "@/config/contract";
 import { Link } from "react-router-dom";
+import {
+  AnimatedSection,
+  PageTransition,
+  HoverAnimation,
+} from "@/components/animations";
 
 interface UserContribution {
   program: Program;
@@ -145,10 +150,10 @@ const MyContributions = () => {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageTransition className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 py-8">
-          <div className="text-center py-12">
+          <AnimatedSection animation="fadeUp" className="text-center py-12">
             <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
             <h2 className="font-space-grotesk text-2xl font-bold mb-2">
               Wallet Tidak Terhubung
@@ -156,91 +161,119 @@ const MyContributions = () => {
             <p className="text-muted-foreground mb-6">
               Hubungkan wallet Anda untuk melihat riwayat kontribusi
             </p>
-          </div>
+          </AnimatedSection>
         </div>
-      </div>
+      </PageTransition>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageTransition className="min-h-screen bg-background">
       <Header />
 
       <div className="container mx-auto px-4 py-8">
         {/* Page Header */}
-        <div className="text-center mb-12">
+        <AnimatedSection
+          animation="fadeUp"
+          delay={0.1}
+          className="text-center mb-12"
+        >
           <div className="flex items-center justify-center gap-4 mb-4">
             <h1 className="font-space-grotesk text-4xl font-bold">
               Kontribusi Saya
             </h1>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleRefresh}
-              disabled={isLoading}
-              className="ml-4"
-            >
-              <RefreshCw
-                className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`}
-              />
-            </Button>
+            <HoverAnimation scale={1.1}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleRefresh}
+                disabled={isLoading}
+                className="ml-4"
+              >
+                <RefreshCw
+                  className={`w-4 h-4 ${isLoading ? "animate-spin" : ""}`}
+                />
+              </Button>
+            </HoverAnimation>
           </div>
           <p className="text-muted-foreground text-lg">
             Lihat semua program yang telah Anda dukung dan dampaknya
           </p>
-        </div>
+        </AnimatedSection>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-primary mb-2">
-                {userContributions.length}
-              </div>
-              <div className="text-muted-foreground">Program Didukung</div>
-            </CardContent>
-          </Card>
-          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-success mb-2">
-                {parseFloat(formatEther(totalContributed)).toFixed(4)}
-              </div>
-              <div className="text-muted-foreground">
-                Total Kontribusi (ETH)
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-            <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-info mb-2">
-                {
-                  userContributions.filter((uc) => uc.program.status === 1)
-                    .length
-                }
-              </div>
-              <div className="text-muted-foreground">Program Berhasil</div>
-            </CardContent>
-          </Card>
-        </div>
+        <AnimatedSection animation="stagger" delay={0.2} staggerDelay={0.1}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <HoverAnimation scale={1.03}>
+              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                <CardContent className="p-6 text-center">
+                  <div className="text-3xl font-bold text-primary mb-2">
+                    {userContributions.length}
+                  </div>
+                  <div className="text-muted-foreground">Program Didukung</div>
+                </CardContent>
+              </Card>
+            </HoverAnimation>
+
+            <HoverAnimation scale={1.03}>
+              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                <CardContent className="p-6 text-center">
+                  <div className="text-3xl font-bold text-success mb-2">
+                    {parseFloat(formatEther(totalContributed)).toFixed(4)}
+                  </div>
+                  <div className="text-muted-foreground">
+                    Total Kontribusi (ETH)
+                  </div>
+                </CardContent>
+              </Card>
+            </HoverAnimation>
+
+            <HoverAnimation scale={1.03}>
+              <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                <CardContent className="p-6 text-center">
+                  <div className="text-3xl font-bold text-info mb-2">
+                    {
+                      userContributions.filter((uc) => uc.program.status === 1)
+                        .length
+                    }
+                  </div>
+                  <div className="text-muted-foreground">Program Berhasil</div>
+                </CardContent>
+              </Card>
+            </HoverAnimation>
+          </div>
+        </AnimatedSection>
 
         {/* Loading State */}
         {isLoading ? (
-          <div className="text-center py-12">
+          <AnimatedSection
+            animation="fadeUp"
+            delay={0.3}
+            className="text-center py-12"
+          >
             <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
             <p className="text-muted-foreground">
               Memuat riwayat kontribusi...
             </p>
-          </div>
+          </AnimatedSection>
         ) : (
           <>
             {/* Contributions List */}
             {userContributions.length > 0 ? (
-              <div className="space-y-6">
+              <AnimatedSection
+                animation="fadeUp"
+                delay={0.3}
+                className="space-y-6"
+              >
                 <h2 className="font-space-grotesk text-2xl font-semibold">
                   Program yang Didukung
                 </h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <AnimatedSection
+                  animation="stagger"
+                  staggerDelay={0.1}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                >
                   {userContributions.map((userContrib) => {
                     const { program } = userContrib;
                     const progress =
@@ -341,10 +374,14 @@ const MyContributions = () => {
                       </Card>
                     );
                   })}
-                </div>
-              </div>
+                </AnimatedSection>
+              </AnimatedSection>
             ) : (
-              <div className="text-center py-12">
+              <AnimatedSection
+                animation="fadeUp"
+                delay={0.3}
+                className="text-center py-12"
+              >
                 <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                 <h3 className="font-space-grotesk text-xl font-semibold mb-2">
                   Belum Ada Kontribusi
@@ -353,52 +390,21 @@ const MyContributions = () => {
                   Mulai dukung program-program menarik di kampus dan buat dampak
                   positif!
                 </p>
-                <Button variant="hero" asChild>
-                  <Link to="/programs">
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    Jelajahi Program
-                  </Link>
-                </Button>
-              </div>
-            )}
-
-            {/* Impact Section */}
-            {userContributions.length > 0 && (
-              <Card className="mt-12 bg-gradient-primary p-8 border-0">
-                <CardContent className="p-0 text-center">
-                  <h2 className="font-space-grotesk text-2xl font-bold text-primary-foreground mb-4">
-                    Terima Kasih!
-                  </h2>
-                  <p className="text-primary-foreground/80 text-lg mb-6">
-                    Kontribusi Anda telah membantu mewujudkan{" "}
-                    {userContributions.length} program di kampus
-                  </p>
-                  <div className="flex justify-center space-x-8 text-primary-foreground">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold">
-                        {userContributions.length}
-                      </div>
-                      <div className="text-sm opacity-80">Program</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold">
-                        {parseFloat(formatEther(totalContributed)).toFixed(2)}
-                      </div>
-                      <div className="text-sm opacity-80">ETH Total</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl font-bold">∞</div>
-                      <div className="text-sm opacity-80">Dampak</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                <HoverAnimation scale={1.05}>
+                  <Button variant="hero" asChild>
+                    <Link to="/programs">
+                      <TrendingUp className="w-4 h-4 mr-2" />
+                      Jelajahi Program
+                    </Link>
+                  </Button>
+                </HoverAnimation>
+              </AnimatedSection>
             )}
           </>
         )}
       </div>
       <Footer />
-    </div>
+    </PageTransition>
   );
 };
 
