@@ -59,9 +59,14 @@ anvil
 
 ### 4. Deploy Smart Contract
 
+Smart contract untuk project ini tersedia di: https://github.com/Web3-Warriors/SmartContract
+
 ```bash
+# Clone smart contract repository terlebih dahulu
+git clone https://github.com/Web3-Warriors/SmartContract.git
+
 # Deploy contract ke local blockchain
-# (Sesuaikan dengan setup smart contract Anda)
+# (Sesuaikan dengan setup smart contract dari repository)
 forge create --rpc-url http://127.0.0.1:8545 --private-key <PRIVATE_KEY> src/CrowdFundingContract.sol:CrowdFundingContract
 ```
 
@@ -104,11 +109,17 @@ File `src/config/contract.ts` berisi:
 
 ## 👤 User Roles
 
-### Admin/Owner
+### Admin
 
 - Dapat membuat program crowdfunding baru
-- Mengelola program yang sudah ada
-- Menarik dana setelah program berakhir
+- Mengelola program yang sudah ada (edit, hapus, update status)
+- Mengawasi seluruh aktivitas platform
+
+### PIC (Person In Charge)
+
+- Bertanggung jawab atas program tertentu
+- Dapat menarik dana setelah program berakhir
+- Mengelola dan memantau progress program yang ditugaskan
 
 ### Regular Users
 
@@ -119,26 +130,66 @@ File `src/config/contract.ts` berisi:
 ## 🏗 Struktur Project
 
 ```
-src/
-├── components/         # Reusable UI components
-│   ├── ui/            # shadcn/ui components
-│   ├── Header.tsx     # Navigation header
-│   └── ProgramCard.tsx # Program display card
-├── hooks/             # Custom React hooks
-│   ├── useIsOwner.ts  # Check if user is contract owner
-│   └── use-toast.ts   # Toast notifications
-├── pages/             # Application pages
-│   ├── Index.tsx      # Landing page
-│   ├── Programs.tsx   # Program listing
-│   ├── ProgramDetail.tsx # Program details
-│   ├── CreateProgram.tsx # Create new program
-│   └── MyContributions.tsx # User contributions
-├── config/            # Configuration files
-│   └── contract.ts    # Smart contract config
-├── providers/         # Context providers
-│   └── Web3Provider.tsx # Web3 configuration
-└── lib/               # Utility functions
-    └── utils.ts       # General utilities
+├── public/                    # Static assets
+│   ├── favicon.ico
+│   ├── logo-long.png
+│   ├── placeholder.svg
+│   └── robots.txt
+├── src/
+│   ├── assets/               # Image assets
+│   │   ├── contrib-img.webp
+│   │   ├── hero-img.webp
+│   │   └── program-img.webp
+│   ├── components/           # Reusable UI components
+│   │   ├── animations/       # Animation components
+│   │   │   ├── AnimatedCard.tsx
+│   │   │   ├── AnimatedSection.tsx
+│   │   │   ├── HoverAnimation.tsx
+│   │   │   ├── index.ts
+│   │   │   └── PageTransition.tsx
+│   │   ├── ui/              # shadcn/ui components
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── FeatureCard.tsx
+│   │   │   ├── NavigationButton.tsx
+│   │   │   ├── StatusBadge.tsx
+│   │   │   └── ... (other UI components)
+│   │   ├── Footer.tsx       # Footer component
+│   │   ├── Header.tsx       # Navigation header
+│   │   └── ProgramCard.tsx  # Program display card
+│   ├── config/              # Configuration files
+│   │   └── contract.ts      # Smart contract config
+│   ├── hooks/               # Custom React hooks
+│   │   ├── use-mobile.tsx   # Mobile detection hook
+│   │   ├── use-toast.ts     # Toast notifications
+│   │   └── useIsOwner.ts    # Check if user is contract owner
+│   ├── lib/                 # Utility functions
+│   │   └── utils.ts         # General utilities
+│   ├── pages/               # Application pages
+│   │   ├── CreateProgram.tsx    # Create new program
+│   │   ├── Index.tsx           # Landing page
+│   │   ├── MyContributions.tsx # User contributions
+│   │   ├── NotFound.tsx        # 404 page
+│   │   ├── ProgramDetail.tsx   # Program details
+│   │   └── Programs.tsx        # Program listing
+│   ├── providers/           # Context providers
+│   │   └── Web3Provider.tsx # Web3 configuration
+│   ├── App.css             # App-specific styles
+│   ├── App.tsx             # Main App component
+│   ├── index.css           # Global styles
+│   ├── main.tsx            # App entry point
+│   └── vite-env.d.ts       # Vite environment types
+├── components.json          # shadcn/ui configuration
+├── eslint.config.js        # ESLint configuration
+├── index.html              # HTML template
+├── package.json            # Project dependencies
+├── postcss.config.js       # PostCSS configuration
+├── tailwind.config.ts      # Tailwind CSS configuration
+├── tsconfig.json           # TypeScript configuration
+├── tsconfig.app.json       # App-specific TypeScript config
+├── tsconfig.node.json      # Node-specific TypeScript config
+└── vite.config.ts          # Vite configuration
 ```
 
 ## 🚀 Deployment
