@@ -16,6 +16,11 @@ import {
 } from "@/config/contract";
 import { useNavigate, Link } from "react-router-dom";
 import { useIsOwner } from "@/hooks/useIsOwner";
+import {
+  AnimatedSection,
+  PageTransition,
+  HoverAnimation,
+} from "@/components/animations";
 
 const CreateProgram = () => {
   const { address, isConnected } = useAccount();
