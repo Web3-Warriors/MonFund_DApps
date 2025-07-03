@@ -52,6 +52,8 @@ const ProgramDetail = () => {
             description: `Terima kasih telah berkontribusi ${contributeAmount} ETH`,
           });
           setContributeAmount("");
+          // Refresh data after successful contribution
+          refetchProgram();
         } else if (variables.functionName === "withdraw") {
           toast({
             title: "Penarikan berhasil!",
