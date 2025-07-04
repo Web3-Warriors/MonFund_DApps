@@ -114,6 +114,7 @@ File `src/config/contract.ts` berisi:
 - Dapat membuat program crowdfunding baru
 - Mengelola program yang sudah ada (edit, hapus, update status)
 - Mengawasi seluruh aktivitas platform
+- Membatalkan program & melakukan refound dana donasi
 
 ### PIC (Person In Charge)
 
@@ -218,31 +219,6 @@ npm test
 # Lint code
 npm run lint
 ```
-
-## 📝 Smart Contract Functions
-
-### Read Functions
-
-- `getListProgramId()`: Mendapatkan daftar ID program
-- `getProgramById(id)`: Detail program berdasarkan ID
-- `owner()`: Alamat owner contract
-- `getHistoryWithdrawByProgram(id)`: Riwayat penarikan program
-
-### Write Functions (Owner Only)
-
-- `createProgram()`: Membuat program baru
-- `withdraw()`: Menarik dana program
-
-### Write Functions (Public)
-
-- `contribute()`: Berkontribusi pada program
-
-## 🔐 Keamanan
-
-- Smart contract menggunakan OpenZeppelin Ownable
-- Validasi input di frontend dan smart contract
-- Penarikan dana hanya setelah program berakhir
-- Semua transaksi tercatat di blockchain
 
 ## 🤝 Contributing
 

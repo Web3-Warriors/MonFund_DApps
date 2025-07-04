@@ -10,6 +10,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { useIsOwner } from "@/hooks/useIsOwner";
 import {
@@ -22,6 +32,7 @@ import {
   Share,
   AlertCircle,
   XCircle,
+  AlertTriangle,
 } from "lucide-react";
 import { useReadContract, useWriteContract, useAccount } from "wagmi";
 import { parseEther, formatEther } from "viem";
@@ -45,6 +56,7 @@ const ProgramDetail = () => {
   const [contributeAmount, setContributeAmount] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
   const [withdrawDesc, setWithdrawDesc] = useState("");
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
 
   const { writeContract, isPending } = useWriteContract({
     mutation: {
@@ -355,14 +367,12 @@ const ProgramDetail = () => {
       return;
     }
 
-    // Confirm action with user
-    const confirmCancel = window.confirm(
-      "Apakah Anda yakin ingin membatalkan program ini? Semua dana akan dikembalikan ke kontributor dan tindakan ini tidak dapat dibatalkan."
-    );
+    // Show confirmation dialog
+    setShowCancelDialog(true);
+  };
 
-    if (!confirmCancel) {
-      return;
-    }
+  const confirmCancelAndRefund = async () => {
+    setShowCancelDialog(false);
 
     try {
       await writeContract({
@@ -766,6 +776,57 @@ const ProgramDetail = () => {
       </div>
 
       <Footer />
+
+      {/* Custom Cancel Confirmation Dialog */}
+      <AlertDialog open={showCancelDialog} onOpenChange={setShowCancelDialog}>
+        <AlertDialogContent className="bg-card/95 backdrop-blur-lg border-destructive/20">
+          <AlertDialogHeader className="space-y-4">
+            <div className="flex items-center justify-center w-12 h-12 mx-auto bg-destructive/10 rounded-full">
+              <AlertTriangle className="w-6 h-6 text-destructive" />
+            </div>
+            <AlertDialogTitle className="text-center text-xl font-bold text-destructive">
+              Batalkan Program & Refund
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-center space-y-3">
+              <p className="text-muted-foreground">
+                Apakah Anda yakin ingin membatalkan program ini?
+              </p>
+              <div className="p-4 bg-destructive/5 border border-destructive/20 rounded-lg space-y-2">
+                <div className="flex justify-center items-center gap-2">
+                  <XCircle className="w-4 h-4 text-destructive" />
+                  <span className="text-sm font-medium text-destructive">
+                    Konsekuensi dari tindakan ini:
+                  </span>
+                </div>
+                <ul className="text-sm text-muted-foreground space-y-1 ml-6">
+                  <li>• Semua dana akan dikembalikan ke kontributor</li>
+                  <li>• Program akan ditandai sebagai "Dibatalkan"</li>
+                  <li>• Tindakan ini tidak dapat dibatalkan</li>
+                  <li>• Semua kontributor akan mendapat refund otomatis</li>
+                </ul>
+              </div>
+              <p className="text-sm text-destructive font-medium">
+                Pastikan Anda benar-benar yakin dengan keputusan ini!
+              </p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-3">
+            <AlertDialogCancel
+              className="flex-1"
+              onClick={() => setShowCancelDialog(false)}
+            >
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="flex-1 bg-destructive hover:bg-destructive/90"
+              onClick={confirmCancelAndRefund}
+              disabled={isPending}
+            >
+              {isPending ? "Memproses..." : "Ya, Batalkan Program"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </PageTransition>
   );
 };
