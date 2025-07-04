@@ -34,7 +34,7 @@ Sebelum menjalankan project, pastikan Anda memiliki:
 ### 1. Clone Repository
 
 ```bash
-git clone <YOUR_GIT_URL>
+git clone https://github.com/Web3-Warriors/MonFund_DApps.git
 cd MonFund
 ```
 
