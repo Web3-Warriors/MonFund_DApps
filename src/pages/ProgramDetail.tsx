@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
+import { useIsOwner } from "@/hooks/useIsOwner";
 import {
   ArrowLeft,
   Calendar,
@@ -20,6 +21,7 @@ import {
   Heart,
   Share,
   AlertCircle,
+  XCircle,
 } from "lucide-react";
 import { useReadContract, useWriteContract, useAccount } from "wagmi";
 import { parseEther, formatEther } from "viem";
@@ -38,6 +40,7 @@ import {
 const ProgramDetail = () => {
   const { id } = useParams<{ id: string }>();
   const { address, isConnected } = useAccount();
+  const { isOwner } = useIsOwner();
   const { toast } = useToast();
   const [contributeAmount, setContributeAmount] = useState("");
   const [withdrawAmount, setWithdrawAmount] = useState("");
@@ -64,6 +67,14 @@ const ProgramDetail = () => {
           // Refresh data after successful withdrawal
           refetchProgram();
           refetchWithdrawals();
+        } else if (variables.functionName === "cancelAndRefund") {
+          toast({
+            title: "Program berhasil dibatalkan!",
+            description: "Dana telah dikembalikan ke semua kontributor",
+          });
+          // Refresh data after successful cancellation
+          refetchProgram();
+          refetchWithdrawals();
         }
       },
       onError: (error, variables) => {
@@ -77,6 +88,12 @@ const ProgramDetail = () => {
           toast({
             title: "Penarikan gagal",
             description: "Terjadi kesalahan saat melakukan penarikan",
+            variant: "destructive",
+          });
+        } else if (variables.functionName === "cancelAndRefund") {
+          toast({
+            title: "Pembatalan gagal",
+            description: "Terjadi kesalahan saat membatalkan program",
             variant: "destructive",
           });
         }
@@ -312,6 +329,67 @@ const ProgramDetail = () => {
       toast({
         title: "Link berhasil disalin!",
         description: "URL program telah disalin ke clipboard",
+      });
+    }
+  };
+
+  const handleCancelAndRefund = async () => {
+    if (!isOwner) {
+      toast({
+        title: "Akses ditolak",
+        description: "Hanya admin yang dapat membatalkan program",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (
+      typedProgram.status !== ProgramStatus.Active &&
+      typedProgram.status !== ProgramStatus.Completed
+    ) {
+      toast({
+        title: "Program tidak dapat dibatalkan",
+        description: "Hanya program aktif atau selesai yang dapat dibatalkan",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Confirm action with user
+    const confirmCancel = window.confirm(
+      "Apakah Anda yakin ingin membatalkan program ini? Semua dana akan dikembalikan ke kontributor dan tindakan ini tidak dapat dibatalkan."
+    );
+
+    if (!confirmCancel) {
+      return;
+    }
+
+    try {
+      await writeContract({
+        address: CROWDFUNDING_CONTRACT_ADDRESS,
+        abi: CROWDFUNDING_ABI,
+        functionName: "cancelAndRefund",
+        args: [BigInt(id!)],
+      } as any);
+    } catch (error: any) {
+      console.error("Cancel and refund error:", error);
+
+      let errorMessage = "Terjadi kesalahan saat membatalkan program";
+
+      if (error.message?.includes("Not Active or Completed")) {
+        errorMessage = "Program tidak dalam status yang dapat dibatalkan";
+      } else if (error.message?.includes("user rejected")) {
+        errorMessage = "Transaksi dibatalkan oleh pengguna";
+      } else if (error.message?.includes("execution reverted")) {
+        errorMessage = "Transaksi ditolak oleh kontrak";
+      } else if (error.message?.includes("CancelAndRefundFailed")) {
+        errorMessage = "Gagal mengembalikan dana ke beberapa kontributor";
+      }
+
+      toast({
+        title: "Pembatalan gagal",
+        description: errorMessage,
+        variant: "destructive",
       });
     }
   };
@@ -646,6 +724,43 @@ const ProgramDetail = () => {
                 </CardContent>
               </Card>
             </AnimatedSection>
+
+            {/* Cancel Program (Admin Only) */}
+            {isOwner &&
+              (typedProgram.status === ProgramStatus.Active ||
+                typedProgram.status === ProgramStatus.Completed) && (
+                <AnimatedSection animation="fadeLeft" delay={0.7}>
+                  <Card className="bg-destructive/5 backdrop-blur-sm border-destructive/20">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2 text-destructive">
+                        <XCircle className="w-5 h-5" />
+                        Zona Admin
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                        <p className="text-sm text-destructive font-medium">
+                          ⚠️ Tindakan Berbahaya
+                        </p>
+                        <p className="text-xs text-destructive/80 mt-1">
+                          Membatalkan program akan mengembalikan semua dana ke
+                          kontributor dan tidak dapat dibatalkan.
+                        </p>
+                      </div>
+                      <HoverAnimation scale={1.02}>
+                        <Button
+                          onClick={handleCancelAndRefund}
+                          disabled={isPending}
+                          className="w-full"
+                          variant="destructive"
+                        >
+                          {isPending ? "Memproses..." : "Batalkan & Refund"}
+                        </Button>
+                      </HoverAnimation>
+                    </CardContent>
+                  </Card>
+                </AnimatedSection>
+              )}
           </div>
         </div>
       </div>

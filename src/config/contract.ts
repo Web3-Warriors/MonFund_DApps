@@ -1,5 +1,5 @@
 export const CROWDFUNDING_CONTRACT_ADDRESS =
-  "0xe1DA8919f262Ee86f9BE05059C9280142CF23f48" as const; // Default Anvil address
+  "0x700b6A60ce7EaaEA56F065753d8dcB9653dbAD35" as const; // Default Anvil address
 export const CROWDFUNDING_ABI = [
   { type: "constructor", inputs: [], stateMutability: "nonpayable" },
   {
