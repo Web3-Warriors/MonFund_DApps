@@ -12,28 +12,25 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
       case ProgramStatus.Active:
         return {
           label: "Aktif",
-          className:
-            "bg-white text-success border-white/30 shadow-sm shadow-black",
+          className: "text-success border-white/30 shadow-sm shadow-black",
           variant: "secondary" as const,
         };
       case ProgramStatus.Completed:
         return {
           label: "Selesai",
-          className:
-            "bg-white text-info border-white/30 shadow-sm shadow-black",
+          className: "text-info border-white/30 shadow-sm shadow-black",
           variant: "secondary" as const,
         };
       case ProgramStatus.Canceled:
         return {
           label: "Dibatalkan",
-          className:
-            "bg-white text-danger border-white/30 shadow-sm shadow-black",
+          className: "text-danger border-white/30 shadow-sm shadow-black",
           variant: "destructive" as const,
         };
       default:
         return {
           label: "Unknown",
-          className: "",
+          className: "bg-whute text-muted-foreground border-white/30",
           variant: "outline" as const,
         };
     }

@@ -632,84 +632,112 @@ const ProgramDetail = () => {
             )}
 
             {/* Withdraw (Only for PIC) */}
-            {isPIC && isProgramEnded && (
-              <AnimatedSection animation="fadeLeft" delay={0.5}>
-                <Card className="bg-card/50 backdrop-blur-sm border-border/50">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5" />
-                      Tarik Dana
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="p-3 bg-info/10 border border-info/20 rounded-lg">
-                      <p className="text-sm text-info">
-                        Program telah berakhir. Anda dapat menarik dana yang
-                        tersedia.
-                      </p>
-                    </div>
-                    <div>
-                      <Label htmlFor="withdrawAmount">Jumlah (ETH)</Label>
-                      <Input
-                        id="withdrawAmount"
-                        type="number"
-                        step="0.001"
-                        value={withdrawAmount}
-                        onChange={(e) => setWithdrawAmount(e.target.value)}
-                      />
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Maksimal:{" "}
-                        {parseFloat(
-                          formatEther(
-                            typedProgram.totalAmount -
-                              typedProgram.withdrawAmount
-                          )
-                        ).toFixed(4)}{" "}
-                        ETH
-                      </p>
-                    </div>
-                    <div>
-                      <Label htmlFor="withdrawDesc">Deskripsi Penggunaan</Label>
-                      <Textarea
-                        id="withdrawDesc"
-                        placeholder="Jelaskan untuk apa dana ini akan digunakan..."
-                        value={withdrawDesc}
-                        onChange={(e) => setWithdrawDesc(e.target.value)}
-                      />
-                    </div>
-                    <HoverAnimation scale={1.02}>
-                      <Button
-                        onClick={handleWithdraw}
-                        disabled={isPending}
-                        className="w-full"
-                        variant="secondary"
-                      >
-                        {isPending ? "Memproses..." : "Tarik Dana"}
-                      </Button>
-                    </HoverAnimation>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            )}
+            {isPIC &&
+              isProgramEnded &&
+              typedProgram.status !== ProgramStatus.Canceled && (
+                <AnimatedSection animation="fadeLeft" delay={0.5}>
+                  <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <AlertCircle className="w-5 h-5" />
+                        Tarik Dana
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="p-3 bg-info/10 border border-info/20 rounded-lg">
+                        <p className="text-sm text-info">
+                          Program telah berakhir. Anda dapat menarik dana yang
+                          tersedia.
+                        </p>
+                      </div>
+                      <div>
+                        <Label htmlFor="withdrawAmount">Jumlah (ETH)</Label>
+                        <Input
+                          id="withdrawAmount"
+                          type="number"
+                          step="0.001"
+                          value={withdrawAmount}
+                          onChange={(e) => setWithdrawAmount(e.target.value)}
+                        />
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Maksimal:{" "}
+                          {parseFloat(
+                            formatEther(
+                              typedProgram.totalAmount -
+                                typedProgram.withdrawAmount
+                            )
+                          ).toFixed(4)}{" "}
+                          ETH
+                        </p>
+                      </div>
+                      <div>
+                        <Label htmlFor="withdrawDesc">
+                          Deskripsi Penggunaan
+                        </Label>
+                        <Textarea
+                          id="withdrawDesc"
+                          placeholder="Jelaskan untuk apa dana ini akan digunakan..."
+                          value={withdrawDesc}
+                          onChange={(e) => setWithdrawDesc(e.target.value)}
+                        />
+                      </div>
+                      <HoverAnimation scale={1.02}>
+                        <Button
+                          onClick={handleWithdraw}
+                          disabled={isPending}
+                          className="w-full"
+                          variant="secondary"
+                        >
+                          {isPending ? "Memproses..." : "Tarik Dana"}
+                        </Button>
+                      </HoverAnimation>
+                    </CardContent>
+                  </Card>
+                </AnimatedSection>
+              )}
 
             {/* Withdrawal Info for PIC when program is still active */}
-            {isPIC && !isProgramEnded && (
+            {isPIC &&
+              !isProgramEnded &&
+              typedProgram.status !== ProgramStatus.Canceled && (
+                <AnimatedSection animation="fadeLeft" delay={0.5}>
+                  <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <AlertCircle className="w-5 h-5" />
+                        Penarikan Dana
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="p-3 bg-warning/10 border border-warning/20 rounded-lg">
+                        <p className="text-sm text-warning">
+                          Dana hanya dapat ditarik setelah program berakhir (
+                          {new Date(
+                            Number(typedProgram.endDate) * 1000
+                          ).toLocaleDateString("id-ID")}
+                          ) atau program diselesaikan.
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </AnimatedSection>
+              )}
+
+            {/* Canceled Program Info for PIC */}
+            {isPIC && typedProgram.status === ProgramStatus.Canceled && (
               <AnimatedSection animation="fadeLeft" delay={0.5}>
-                <Card className="bg-card/50 backdrop-blur-sm border-border/50">
+                <Card className="bg-destructive/5 backdrop-blur-sm border-destructive/20">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <AlertCircle className="w-5 h-5" />
-                      Penarikan Dana
+                    <CardTitle className="flex items-center gap-2 text-destructive">
+                      <XCircle className="w-5 h-5" />
+                      Program Dibatalkan
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="p-3 bg-warning/10 border border-warning/20 rounded-lg">
-                      <p className="text-sm text-warning">
-                        Dana hanya dapat ditarik setelah program berakhir (
-                        {new Date(
-                          Number(typedProgram.endDate) * 1000
-                        ).toLocaleDateString("id-ID")}
-                        ) atau program diselesaikan.
+                    <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+                      <p className="text-sm text-destructive">
+                        Program ini telah dibatalkan. Semua dana yang terkumpul
+                        telah dikembalikan kepada kontributor secara otomatis.
                       </p>
                     </div>
                   </CardContent>
